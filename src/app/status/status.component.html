@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+    <span class="title-center">Status</span>
+</mat-toolbar>
+<div class="container mat-elevation-z8">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter">
+  </mat-form-field>
+    <mat-table [dataSource]="dataSource" class="mat-cell" matSort> <!--uzima datasource koji je definisan u koponenti       TABELA-->
+
+        <ng-container matColumnDef="id">                                                        <!--KOLONE-->
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.id}}</mat-cell> <!--prvo definisemo varijablu row pa iz nje izvlacimo id-->
+        </ng-container>
+
+        <ng-container matColumnDef="naziv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.naziv}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="oznaka">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Opis</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.oznaka}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">         <!--AKCIJE-->
+            <mat-header-cell *matHeaderCellDef>         <!--ADD-->
+              <button mat-icon-button color="primary" (click)="openDialog(1, 0, '', '')"> <!--OVAKO KLIKOM PROSLEDJUJEMO VREDNOST 1 ZA FLAG odnosno dodavanje-->    <!--proveriti sta je ovo!-->
+                <mat-icon>add</mat-icon> <!--OVO JE ONAJ PLUS ZA DODAVANJE-->
+              </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">           <!--EDIT-->
+              <button mat-icon-button color="primary" (click)="openDialog(2, row.id, row.naziv, row.oznaka)"> <!--row uzima vrednosti iz redova tabele-->
+                <mat-icon arial label="Edit">edit</mat-icon>
+              </button>                                <!--DELETE-->
+              <button mat-icon-button color="primary" (click)="openDialog(3, row.id, row.naziv, row.oznaka)">
+                <mat-icon arial label="Delete">delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"> <!--Uzimamo na osnovu definisanog displayedColums u komponenti-->
+        <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns">
+        </mat-row>
+    </mat-header-row>
+    </mat-table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+
+    </mat-paginator>
+</div>

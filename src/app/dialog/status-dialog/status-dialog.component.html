@@ -1,0 +1,31 @@
+<div class="container"> <!--pravimo klasu-->
+  <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje statusa</h3>       <!--dodajemo naslove -- bGIF sluzi za sakrevanje - metoda opendialog prosledjuje flagu 1 tj klik na + -->
+  <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija statusa: {{data.naziv}}</h3> <!--Modifikacija-->
+  <h3 mat-dialog-title *ngIf="flag == 3">Brisanje statusa: {{data.naziv}}</h3> <!--EDIT-->
+  <form class="mat-dialog-content" #formControl="ngForm"> <!--Pravimo formu omogucava nam ovo Forms module koji smo importovali-->
+    <div class="form">
+      <mat-form-field>
+        <input matInput placeholder="Naziv" [(ngModel)]="data.naziv" name="naziv" [disabled] = "flag == 3" required> <!--disable ne da da unosi npr ako je delete-->
+      </mat-form-field>
+    </div>
+    <div class="form">
+      <mat-form-field>
+        <input matInput placeholder="Oznaka" [(ngModel)]="data.oznaka" name="oznaka" [disabled] = "flag == 3" required>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button *ngIf="flag == 1" type="submit" [mat-dialog-close]="1" (click)="add()" [disabled]="!formControl.valid">  <!--DODAVANJE--> <!--"1" se poziva na onaj resault u open dialog metodi da se ponovo prikazu svi podaci"-->
+        Sačuvaj
+      </button>
+      <button mat-button *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()" [disabled]="!formControl.valid"> <!--UPDATE-->
+        Sačuvaj
+      </button>
+      <button mat-button *ngIf="flag == 3" type="submit" [mat-dialog-close]="1" (click)="delete()"> <!--BRISANJE-->
+        Obriši
+      </button>
+      <button mat-button (click)="cancel()">Poništi</button>
+
+    </div>
+  </form>
+</div>
